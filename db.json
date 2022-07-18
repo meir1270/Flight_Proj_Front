@@ -1,0 +1,17 @@
+{
+    "cars":[{
+        "id":1,
+        "color":"black",
+        "model":2000
+    },
+    {
+        "id":2,
+        "color":"green",
+        "model":2100
+    },{
+        "id":3,
+        "color":"white",
+        "model":2002
+    }
+]
+}
