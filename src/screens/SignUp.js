@@ -55,7 +55,7 @@ const SignUp = () => {
     setErrMsg('');
   }, [user, email, pwd, matchPwd])
 
-  const habdleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
@@ -98,11 +98,9 @@ const SignUp = () => {
       <br />
       <>
         {success ? (
-          <Navigate to="/" replace={true} />
-
+          <Navigate to="/Login" replace={true} />
         ) : (
-          <section>
-
+          <section onSubmit={handleSubmit}>
             <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"}
               aria-live="assertive">{errMsg}</p>
             <h1>SignUp</h1>

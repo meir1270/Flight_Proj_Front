@@ -1,0 +1,91 @@
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectCountrie,
+  getCountrieAsync,
+  deleteCountrieAsync,
+  addCountrieAsync,
+} from "../app/countrieSlice";
+import '../App.css'
+import Table from 'react-bootstrap/Table';
+
+const Countrie = () => {
+  const [name, setName] = useState("")
+  const [image, setImage] = useState(null);
+  const myCountrie = useSelector(selectCountrie);
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  useEffect(() => {
+    dispatch(getCountrieAsync());
+  }, []);
+
+  const handleImage = (e) => {
+    e.preventDefault();
+    console.log(e.target.files);
+    setImage(e.target.files[0]);
+  };
+
+
+  return (
+    <div>
+      <div>
+        <br /><br /><br /><br />
+        <input onChange={(e) => setName(e.target.value)} />
+        <input
+            type="file"
+            id="image"
+            accept="image/png,image/jpeg"
+            onChange={handleImage}
+            required
+          ></input>
+        Countrie Name
+        <button
+          onClick={() =>
+            dispatch(
+              addCountrieAsync({
+                name: name,
+                image: image,
+              })
+            )
+          }
+        >
+          Add Countrie
+        </button>
+      </div>
+      <br /><br /><br /><br />
+      Search by name: <input onChange={(e) => setSearch(e.target.value)} />
+      <br />We have {myCountrie.length} Countries in my site
+
+
+      <Table striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Countrie Name</th>
+            <th>Image</th>
+            <th></th>
+
+          </tr>
+        </thead>
+        {myCountrie
+          .filter((x) =>
+            x.name.includes(search))
+          .map((countrie, i) => (
+            <tbody key={i}>
+              <tr>
+                <td>{countrie.id}</td>
+                <td>{countrie.name}</td>
+                <td><img src={`./${countrie.image}`} alt={countrie.name}></img></td>
+                <td>
+                  <button onClick={() => dispatch(deleteCountrieAsync({ id: countrie.id }))} >
+                    Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          ))}
+      </Table>
+    </div>
+  );
+};
+
+export default Countrie;

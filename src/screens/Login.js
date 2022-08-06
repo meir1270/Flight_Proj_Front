@@ -1,26 +1,31 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './Login.css'
 import axios from '../api/axios';
 import { Link } from 'react-router-dom'
-import AuthContext from "../context/AuthProvider";
 import jwt_decode from "jwt-decode";
 import { Navigate } from "react-router-dom";
+import {  useDispatch } from "react-redux";
+import { login,} from "../app/loggedSlice";
+import {
+    set_is_staff,
+    set_is_superuser,
+    Set_userName,
+    Set_access,
+} from "../app/userSlice";
 
 const LOGIN_URL = '/token/';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+    const dispatch = useDispatch();
+
     const userRef = useRef()
     const errRef = useRef()
 
-    const [userName, setUserName] = useState("")
     const [user, setUser] = useState("")
     const [pwd, setPwd] = useState("")
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
-    const [staff, setStaff] = useState(false)
-    const [superUser, setSuperUser] = useState(false)
-
+ 
     useEffect(() => {
         userRef.current.focus();
     }, [])
@@ -39,14 +44,14 @@ const Login = () => {
                     headers: { 'Content-Type': 'application/json' },
                 }
             );
-            // console.log(JSON.stringify(response.data));
-            localStorage.setItem("access", response.data.access)
-            setUserName(jwt_decode(response.data.access).username)
-            setStaff(jwt_decode(response.data.access).is_staff)
-            setSuperUser(jwt_decode(response.data.access).is_superuser)
-            //console.log(JSON.stringify(response));
             const access = response.data.access;
-            setAuth({ user, pwd, superUser, staff, access });
+            localStorage.setItem("access", access)
+            dispatch(login())
+            dispatch(Set_userName(jwt_decode(response.data.access).username))
+            dispatch(set_is_staff(jwt_decode(response.data.access).is_staff))
+            dispatch(set_is_superuser(jwt_decode(response.data.access).is_superuser))
+            dispatch(Set_access(access))
+
             setUser('');
             setPwd('');
             setSuccess(true);
@@ -65,46 +70,27 @@ const Login = () => {
         }
     }
 
-    const getCustomers = async () => {
-        const headers = {
-            'Authorization': `Bearer ${localStorage.getItem("access")}`
-        };
-        await axios.get('http://127.0.0.1:8000/customers',
-            { headers })
-            .then(function (response) {
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-    // const login = () => {
-    //     axios.post(LOGIN_URL, {
-    //         username: user,
-    //         password: pwd
-    //     })
+    // const getCustomers = async () => {
+    //     const headers = {
+    //         'Authorization': `Bearer ${localStorage.getItem("access")}`
+    //     };
+    //     await axios.get('http://127.0.0.1:8000/customers',
+    //         { headers })
     //         .then(function (response) {
-    //             console.log(response.data.access);
-    //             localStorage.setItem("access", response.data.access)
+    //             console.log(response.data);
     //         })
     //         .catch(function (error) {
     //             console.log(error);
     //         });
     // }
+
     return (
         <div className='mainLogin'>
             {success ? (
-                // <section>
                 <div>
-                    <br /> <br />
-                    {superUser === true && <button onClick={() => getCustomers()}>get Customers</button>}
-                    <h1>Welcome {userName} You are logged in!</h1>
                     {/* <Link to="/">Go back to Home</Link> */}
-
                     <Navigate to="/" replace={true} />
                 </div>
-                // </section>
             ) : (
                 <section onSubmit={handleSubmit}>
                     <p ref={errRef} className={errMsg ? "errmsg" :
