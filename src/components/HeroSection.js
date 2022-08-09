@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 import './HeroSection.css';
 
-function HeroSection() {
+const HeroSection = () => {
   return (
     <div className='hero-container'>
       <img src='/static/image-3.jpg' alt='air_plane' style={{height:"103%"}}></img>

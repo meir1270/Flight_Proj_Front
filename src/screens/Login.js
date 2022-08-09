@@ -88,7 +88,6 @@ const Login = () => {
         <div className='mainLogin'>
             {success ? (
                 <div>
-                    {/* <Link to="/">Go back to Home</Link> */}
                     <Navigate to="/" replace={true} />
                 </div>
             ) : (

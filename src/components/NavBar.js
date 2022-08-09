@@ -29,11 +29,13 @@ const NavBar = () => {
             <ul>
                 <li><Link to="/">Home</Link></li>
                 {superUser === true && <li><Link to="/customers">Customers</Link></li>}
-                {superUser === true && <li><Link to="/airlineCompanie">AirLine Companie</Link></li>}
+                {superUser === true && <li><Link to="/airlineCompanie">AirLines</Link></li>}
                 {superUser === true && <li><Link to="/countrie">Countries</Link></li>}
-                {superUser === true && <li><Link to="/flight">Flight</Link></li>}
+                {superUser === true && <li><Link to="/flights">Flights</Link></li>}
                 {superUser === true && <li><Link to="/tickets">Tickets</Link></li>}
+                {superUser === true && <li><Link to="/users">Users</Link></li>}
                 {log === true && <li onClick={() => log_out()} style={{ float: "right" }}><Link to="/Login">Logout</Link></li>}
+                {log === true && <li style={{ float: "right" }}><Link to="/setting">Settings</Link></li>}
                 {log === false && <li style={{ float: "right" }}><Link to="/Login">Login</Link></li>}
                 {log === false && <li style={{ float: "right" }}><Link to="/SignUp">SignUp</Link></li>}
             </ul>

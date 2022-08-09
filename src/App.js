@@ -18,6 +18,11 @@ import AirlineCompanie from './screens/AirlineCompanie';
 import Countrie from './screens/Countrie';
 import Flight from './screens/Flights';
 import Tickets from './screens/Tickets';
+import Setting from './screens/Setting';
+import Users from './screens/Users';
+import MyFlight from './components/MyFlight';
+// import {checkSelectedFlight} from "./app/flightSlice";
+import Booking from './components/Booking';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +30,7 @@ function App() {
   useEffect(() => {
       dispatch(checkLogin())
       dispatch(checkUser())
+      // dispatch(checkSelectedFlight())
   }, [])
   return (
     <div>
@@ -35,10 +41,14 @@ function App() {
             <Route path="/customers" element={<Customers />} />
             <Route path="/airlineCompanie" element={<AirlineCompanie />} />
             <Route path="/countrie" element={<Countrie />} />
-            <Route path="/flight" element={<Flight />} />
+            <Route path="/flights" element={<Flight />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/MyFlight" element={<MyFlight />} />
             <Route path="/tickets" element={<Tickets />} />
-            <Route path="Login" element={<Login />} />
-            <Route path="SignUp" element={<SignUp />} />
+            <Route path="/setting" element={<Setting />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/booking" element={<Booking />} />
           </Routes>
           <Footer />
       </BrowserRouter>

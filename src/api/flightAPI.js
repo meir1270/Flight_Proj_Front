@@ -39,9 +39,10 @@ export function delFlight(id) {
 
 // createAsyncThunk -> updProd-> createAsyncThunk -> extra
 
-
-export function get_selected_flight(origin_countrie_id,destination_countrie_id,fromTime,toTime) {
+// fromCT,toCT,departDate,returnDate
+export function get_selected_flight(SelectedFlight) {
   return new Promise((resolve) =>
-    axios.get(`${SELECTED_FLIGHTS} ${origin_countrie_id}/${destination_countrie_id}/${fromTime}/${toTime}`).then((res) => resolve(console.log({ data: res.data })))
+    axios.get(`${SELECTED_FLIGHTS+SelectedFlight.fromCT}/${SelectedFlight.toCT}/${SelectedFlight.departDate}/${SelectedFlight.returnDate}`)
+    .then((res) => resolve({ data: res.data }))
   );
 }

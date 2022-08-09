@@ -11,7 +11,6 @@ export const getTicketsAsync = createAsyncThunk(
   "tickets/getTickets",
   async () => {
     const response = await getTickets();
-    console.log(response.data)
     return response.data;
   }
 );
