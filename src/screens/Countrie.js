@@ -11,7 +11,6 @@ import Table from 'react-bootstrap/Table';
 
 const Countrie = () => {
   const [name, setName] = useState("")
-  const [image, setImage] = useState(null);
   const myCountrie = useSelector(selectCountrie);
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
@@ -19,32 +18,18 @@ const Countrie = () => {
     dispatch(getCountrieAsync());
   }, []);
 
-  const handleImage = (e) => {
-    e.preventDefault();
-    console.log(e.target.files);
-    setImage(e.target.files[0]);
-  };
-
-
   return (
     <div>
       <div>
         <br /><br /><br /><br />
         <input onChange={(e) => setName(e.target.value)} />
-        <input
-            type="file"
-            id="image"
-            accept="image/png,image/jpeg"
-            onChange={handleImage}
-            required
-          ></input>
+
         Countrie Name
         <button
           onClick={() =>
             dispatch(
               addCountrieAsync({
                 name: name,
-                image: image,
               })
             )
           }
@@ -67,7 +52,7 @@ const Countrie = () => {
 
           </tr>
         </thead>
-        {myCountrie
+        {myCountrie.length >0 && myCountrie
           .filter((x) =>
             x.name.includes(search))
           .map((countrie, i) => (

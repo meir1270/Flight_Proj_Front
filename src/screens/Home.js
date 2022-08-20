@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div>
-      {log === true && <h1><br />Welcome {userName} You are logged in!</h1>}
+      {log === true && <h1><br />Welcome {userName}, you are logged in!</h1>}
       <div>
         <HeroSection />
       </div>

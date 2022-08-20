@@ -16,25 +16,6 @@ const Users = () => {
 
   return (
     <div>
-      {/* add Customer */}
-      {/* <div style={{ backgroundColor: "cyan" }}>
-        admin area.... Company
-        <input onChange={(e) => setCompanyName(e.target.value)} />
-        Destination
-        <input onChange={(e) => setDestination(e.target.value)} />
-        <button
-          onClick={() =>
-            dispatch(
-              addFlightAsync({
-                companyName: companyName,
-                destination: destination,
-              })
-            )
-          }
-        >
-          Add flight
-        </button>
-      </div> */}
       <br /><br /><br /><br />
       Search by name: <input onChange={(e) => setSearch(e.target.value)} />
       <br />We have {myUsers.length} Users in my site
@@ -50,7 +31,7 @@ const Users = () => {
           <th></th>
         </tr>
       </thead>
-      {myUsers
+      {myUsers.length >0 && myUsers
       .filter((x) =>
       x.user.username.includes(search))
       .map((user,i) => (

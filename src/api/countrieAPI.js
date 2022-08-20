@@ -2,13 +2,12 @@ import axios from "./axios";
 
 const COUNTRIE_URL = "/countrie";
 const ADD_COUNTRIE_URL = "/addcountrie";
+const DELETE_COUNTRIE_URL = "/deletecountrie/";
+
 
 export function getCountrie() {
-  const headers = { 
-    'Authorization': `Bearer ${localStorage.getItem("access")}`
-  };
   return new Promise((resolve) =>
-    axios.get(COUNTRIE_URL, {headers}).then((res) => resolve({ data: res.data }))
+    axios.get(COUNTRIE_URL,).then((res) => resolve({ data: res.data }))
   );
 }
 
@@ -17,7 +16,7 @@ export function addCountrie(newCountrie) {
     'Authorization': `Bearer ${localStorage.getItem("access")}`
   };
   return new Promise((resolve) =>
-    axios.post(ADD_COUNTRIE_URL,{headers}, newCountrie).then((res) => resolve({ data: res.data }))
+    axios.post(ADD_COUNTRIE_URL, newCountrie,{headers}).then((res) => resolve({ data: res.data }))
   );
 }
 
@@ -26,7 +25,7 @@ export function deleteCountrie(id) {
     'Authorization': `Bearer ${localStorage.getItem("access")}`
   };
   return new Promise((resolve) =>
-    axios.delete(COUNTRIE_URL + "/" + id,{headers}).then((res) => resolve({ data: res.data }))
+    axios.delete(DELETE_COUNTRIE_URL + "/" + id,{headers}).then((res) => resolve({ data: res.data }))
   );
 }
 

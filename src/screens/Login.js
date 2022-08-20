@@ -11,6 +11,7 @@ import {
     set_is_superuser,
     Set_userName,
     Set_access,
+     set_user_id,
 } from "../app/userSlice";
 
 const LOGIN_URL = '/token/';
@@ -49,6 +50,7 @@ const Login = () => {
             dispatch(login())
             dispatch(Set_userName(jwt_decode(response.data.access).username))
             dispatch(set_is_staff(jwt_decode(response.data.access).is_staff))
+            dispatch(set_user_id(jwt_decode(response.data.access).user_id))
             dispatch(set_is_superuser(jwt_decode(response.data.access).is_superuser))
             dispatch(Set_access(access))
 
@@ -69,20 +71,6 @@ const Login = () => {
             errRef.current.focus();
         }
     }
-
-    // const getCustomers = async () => {
-    //     const headers = {
-    //         'Authorization': `Bearer ${localStorage.getItem("access")}`
-    //     };
-    //     await axios.get('http://127.0.0.1:8000/customers',
-    //         { headers })
-    //         .then(function (response) {
-    //             console.log(response.data);
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // }
 
     return (
         <div className='mainLogin'>

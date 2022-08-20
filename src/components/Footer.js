@@ -14,46 +14,42 @@ function Footer() {
           </div>
           <small className='website-rights'>Flight Project © 2022</small>
           <div className='social-icons'>
-            <Link
+            <a
               className='social-icon-link facebook'
-              to='/'
+              href='https://www.facebook.com/profile.php?id=100000919320765'
               target='_blank'
+              rel="noopener noreferrer"
               aria-label='Facebook'
             >
               <i className='fab fa-facebook-f' />
-            </Link>
-            <Link
-              className='social-icon-link instagram'
-              to='/'
+              </a>
+            <a
+              className='social-icon-link docker'
+              href='https://hub.docker.com/u/meir1270'
               target='_blank'
-              aria-label='Instagram'
+              rel="noopener noreferrer"
+              aria-label='docker'
             >
-              <i className='fab fa-instagram' />
-            </Link>
-            <Link
-              className='social-icon-link youtube'
-              to='/'
+              <i className='fab fa-docker' />
+            </a>
+            <a
+              className='social-icon-link github'
+              href='https://github.com/meir1270'
               target='_blank'
-              aria-label='Youtube'
+              rel="noopener noreferrer"
+              aria-label='github'
             >
-              <i className='fab fa-youtube' />
-            </Link>
-            <Link
-              className='social-icon-link twitter'
-              to='/'
+              <i className='fab fa-github' />
+            </a>
+            <a
+              className='social-icon-link linkedin'
+              href='https://www.linkedin.com/in/meir-mavashov-2854a5239/'
               target='_blank'
-              aria-label='Twitter'
-            >
-              <i className='fab fa-twitter' />
-            </Link>
-            <Link
-              className='social-icon-link twitter'
-              to='/'
-              target='_blank'
+              rel="noopener noreferrer"
               aria-label='LinkedIn'
             >
               <i className='fab fa-linkedin' />
-            </Link>
+            </a>
           </div>
         </div>
     </div>

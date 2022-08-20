@@ -39,7 +39,7 @@ const AirlineCompanie = () => {
         </button>
       </div> */}
       <br /><br /><br /><br />
-      Search by name: <input onChange={(e) => setSearch(e.target.value)} />
+      Search by Airline Companies: <input onChange={(e) => setSearch(e.target.value)} />
       <br />We have {myAirline_Companies.length} airline Companies in my site
       <br/><br/>
       <Table striped bordered hover variant="dark">

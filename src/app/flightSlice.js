@@ -1,19 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {getFlights,addFlight,delFlight,get_selected_flight} from '../api/flightAPI'
+import { getFlights, addFlight, delFlight, get_selected_flight,getFlightForAirline } from '../api/flightAPI'
 
 const initialState = {
   FlightAR: [],
   status: "idle",
-  selectedFlightAR:[],
+  selectedFlightAR: [],
+  yourFlight: [],
+  airlineFlightsAR:[],
 };
 
 
 export const getFlightAsync = createAsyncThunk(
   "flight/getFlights",
-   async () => {
-  const response = await getFlights();
-  return response.data;
-});
+  async () => {
+    const response = await getFlights();
+    return response.data;
+  });
 
 // call the methods in the API
 export const addFlightAsync = createAsyncThunk(
@@ -27,9 +29,17 @@ export const addFlightAsync = createAsyncThunk(
 export const deleteFlightAsync = createAsyncThunk(
   "flight/deleteFlight",
   async (id) => {
-    console.log(id);
     await delFlight(id.id);
     return id.id;
+  }
+);
+
+// call the methods in the API
+export const getFlightForAirlineAsync = createAsyncThunk(
+  "flight/getFlightAsynForAirline",
+  async () => {
+    const response = await getFlightForAirline();
+    return response.data;
   }
 );
 
@@ -52,10 +62,13 @@ export const deleteFlightAsync = createAsyncThunk(
 // fromCT,toCT,departDate,returnDate
 export const get_selected_flightAsync = createAsyncThunk(
   "flight/get_selected_flight",
-   async (SelectedFlight) => {
-  const response = await get_selected_flight(SelectedFlight);
-  return response.data;
-});
+  async () => {
+    let myFlight = JSON.parse(localStorage.getItem("myFlight"))
+    if (myFlight) {
+      const response = await get_selected_flight(myFlight);
+      return response.data;
+    }
+  });
 
 
 export const flightSlice = createSlice({
@@ -63,11 +76,15 @@ export const flightSlice = createSlice({
   initialState,
   reducers: {
     checkSelectedFlight: (state) => {
-      let myFlight = localStorage.getItem("myFlight");
-      if (myFlight) {
-        state.selectedFlightAR = myFlight;
-      }
+      // let myFlight = localStorage.getItem("yourFlight");
+      // if (myFlight) {
+      //   state.yourFlight = myFlight
+      // }
     },
+    saveSelectedFlight: (state, action) => {
+      state.yourFlight = action.payload
+      // localStorage.setItem("yourFlight", JSON.stringify(state.yourFlight));
+    }
   },
 
   extraReducers: (builder) => {
@@ -80,27 +97,34 @@ export const flightSlice = createSlice({
       })
       .addCase(addFlightAsync.fulfilled, (state, action) => {
         state.FlightAR.push(action.payload);
+        state.airlineFlightsAR.push(action.payload);
       })
-    //   .addCase(updCustomerAsync.fulfilled, (state, action) => {
-    //     console.log(action.payload);
-    //     let updCustomer = state.FlightAR.find(
-    //       (customer) => customer.id === action.payload.id
-    //     );
-    //     updFlight.destination = action.payload.destination;
-    //     updFlight.companyName = action.payload.companyName;
-    //   }) 
-        .addCase(deleteFlightAsync.fulfilled, (state, action) => {
-          console.log(action.payload)
-        state.FlightAR = state.FlightAR.filter(x=> x.id !==  action.payload);
+      
+      //   .addCase(updCustomerAsync.fulfilled, (state, action) => {
+      //     console.log(action.payload);
+      //     let updCustomer = state.FlightAR.find(
+      //       (customer) => customer.id === action.payload.id
+      //     );
+      //     updFlight.destination = action.payload.destination;
+      //     updFlight.companyName = action.payload.companyName;
+      //   }) 
+      .addCase(deleteFlightAsync.fulfilled, (state, action) => {
+        state.FlightAR = state.FlightAR.filter(x => x.id !== action.payload);
+        state.airlineFlightsAR = state.airlineFlightsAR.filter(x => x.id !== action.payload);
+
       })
       .addCase(get_selected_flightAsync.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.selectedFlightAR = action.payload;
+      })
+      .addCase(getFlightForAirlineAsync.fulfilled, (state, action) => {
+        state.airlineFlightsAR = action.payload;
       });
   },
 });
 
-export const {checkSelectedFlight} = flightSlice.actions;
+export const { checkSelectedFlight, saveSelectedFlight } = flightSlice.actions;
 export const selectFlight = (state) => state.flight.FlightAR;
 export const selectedFlight = (state) => state.flight.selectedFlightAR;
+export const selectYourFlight = (state) => state.flight.yourFlight;
+export const selectAirlineFlight = (state) => state.flight.airlineFlightsAR;
 export default flightSlice.reducer;

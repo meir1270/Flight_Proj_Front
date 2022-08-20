@@ -1,24 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import "./myFlight.css"
-import { get_selected_flightAsync, selectedFlight} from "../app/flightSlice";
+import { get_selected_flightAsync, selectedFlight, saveSelectedFlight } from "../app/flightSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Table from 'react-bootstrap/Table';
 import { Link } from "react-router-dom";
+import { selectLog } from "../app/loggedSlice";
 
 const MyFlight = () => {
     const dispatch = useDispatch();
     const myFlight = useSelector(selectedFlight);
     const [search, setSearch] = useState("");
+    const log = useSelector(selectLog);
 
     useEffect(() => {
         dispatch(get_selected_flightAsync())
     }, [])
 
+    const saveFlight = (flight) => {
+        let yourFlight = {
+            id:flight.id,
+            airline_Companie_name:flight.airline_Companie.name,
+            origin_countrie:flight.origin_countrie.name,
+            destination_countrie:flight.destination_countrie.name,
+            departure_time:flight.departure_time,
+            landing_time:flight.landing_time,
+            remaining_tickets:flight.remaining_tickets
+          }
+        dispatch(saveSelectedFlight(yourFlight))
+    }
+
     return (
         <div>
-            <br /><br /><br /><br />
-            Search by name: <input onChange={(e) => setSearch(e.target.value)} />
-            <br />We have flight {myFlight.length} as you requested
+            <br /><br />
+            {log === false && <h4 style={{ textAlign: "center" }}> you must Login to booking a flight </h4>}
+            <br /><br />
+            Search by AirLine Companie: <input onChange={(e) => setSearch(e.target.value)} />
+            <br />We have {myFlight.length} flight as you requested
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>
@@ -29,7 +45,7 @@ const MyFlight = () => {
                         <th>departure time</th>
                         <th>landing time</th>
                         <th>remaining tickets</th>
-                        <th> </th>
+                        <th>  </th>
                     </tr>
                 </thead>
                 {myFlight
@@ -45,11 +61,22 @@ const MyFlight = () => {
                                 <td>{flight.departure_time.split("").filter((s, i) => i <= 15)}</td>
                                 <td>{flight.landing_time.split("").filter((s, i) => i <= 15)}</td>
                                 <td>{flight.remaining_tickets}</td>
-                                <td><Link to="/booking">Booking</Link></td>
+                                <td>
+                                {!log ? (
+                                    <button onClick={() =>saveFlight(flight)}>
+                                        <Link to="/Login">Booking</Link>
+                                    </button>
+                                ) : (
+                                    <button onClick={() =>saveFlight(flight)}>
+                                        <Link to={"/booking"}>Booking</Link>
+                                    </button>
+                                )}
+                                </td>
                             </tr>
                         </tbody>
                     ))}
             </Table>
+            <br/><br/><br/><br/>
         </div>
     )
 }

@@ -17,7 +17,7 @@ export function addCustomers(newCustomers) {
     'Authorization': `Bearer ${localStorage.getItem("access")}`
   };
   return new Promise((resolve) =>
-    axios.post(ADD_CUSTOMER_URL,{headers}, newCustomers).then((res) => resolve({ data: res.data }))
+    axios.post(ADD_CUSTOMER_URL,newCustomers,{headers}).then((res) => resolve({ data: res.data }))
   );
 }
 

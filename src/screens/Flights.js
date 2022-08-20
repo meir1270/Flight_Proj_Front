@@ -2,7 +2,6 @@ import React, { useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectFlight,
-  // addFlightAsync,
   deleteFlightAsync,
   getFlightAsync,
 } from "../app/flightSlice";
@@ -18,28 +17,9 @@ const Flight = () => {
 
   return (
     <div>
-      {/* add Flight */}
-      {/* <div style={{ backgroundColor: "cyan" }}>
-        admin area.... Company
-        <input onChange={(e) => setCompanyName(e.target.value)} />
-        Destination
-        <input onChange={(e) => setDestination(e.target.value)} />
-        <button
-          onClick={() =>
-            dispatch(
-              addFlightAsync({
-                companyName: companyName,
-                destination: destination,
-              })
-            )
-          }
-        >
-          Add Flight
-        </button>
-      </div> */}
       <br /><br /><br /><br />
       <br />We have {myFlight.length} Flight in my site
-
+      <br /> <br />
 
       <Table striped bordered hover variant="dark">
         <thead>

@@ -53,9 +53,6 @@ export const customersSlice = createSlice({
   name: "customers",
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   state.value += 1;
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -67,6 +64,7 @@ export const customersSlice = createSlice({
       })
       .addCase(addCustomersAsync.fulfilled, (state, action) => {
         state.customersAR.push(action.payload);
+        console.log(action.payload)
       })
     //   .addCase(updCustomerAsync.fulfilled, (state, action) => {
     //     console.log(action.payload);

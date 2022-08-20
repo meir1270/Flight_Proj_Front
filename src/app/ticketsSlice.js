@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addTickets,deleteTickets,getTickets} from "../api/ticketsAPI";
+import { addTickets,deleteTickets,getTickets,getTicketsForUser} from "../api/ticketsAPI";
 
 const initialState = {
   status: "idle",
   ticketsAR: [],
+  myTicketsAR:[]
 };
 
 // call the methods in the API
@@ -11,6 +12,15 @@ export const getTicketsAsync = createAsyncThunk(
   "tickets/getTickets",
   async () => {
     const response = await getTickets();
+    return response.data;
+  }
+);
+
+// call the methods in the API
+export const getTicketsForUserAsync = createAsyncThunk(
+  "tickets/getTicketsForUser",
+  async () => {
+    const response = await getTicketsForUser();
     return response.data;
   }
 );
@@ -62,6 +72,9 @@ export const ticketsSlice = createSlice({
       .addCase(getTicketsAsync.pending, (state) => {
         state.status = "loading";
       })
+      .addCase(getTicketsForUserAsync.fulfilled, (state, action) => {
+        state.myTicketsAR = action.payload;
+      })
       .addCase(getTicketsAsync.fulfilled, (state, action) => {
         state.ticketsAR = action.payload;
       })
@@ -85,4 +98,5 @@ export const ticketsSlice = createSlice({
 
 // export const {} = customersSlice.actions;
 export const selectTickets = (state) => state.tickets.ticketsAR;
+export const selectMyTickets = (state) => state.tickets.myTicketsAR;
 export default ticketsSlice.reducer;

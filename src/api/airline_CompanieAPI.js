@@ -17,7 +17,7 @@ export function addAirline_Companie(newAirline_Companie) {
     'Authorization': `Bearer ${localStorage.getItem("access")}`
   };
   return new Promise((resolve) =>
-    axios.post(ADD_airline_Companie_URL,{headers}, newAirline_Companie).then((res) => resolve({ data: res.data }))
+    axios.post(ADD_airline_Companie_URL, newAirline_Companie,{headers}).then((res) => resolve({ data: res.data }))
   );
 }
 

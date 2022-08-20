@@ -1,58 +1,62 @@
-import React, {  useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Form.css';
-import {get_selected_flightAsync,selectedFlight} from "../app/flightSlice";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch,useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-
+import {
+  selectCountrie,
+  getCountrieAsync,
+} from "../app/countrieSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const Form = () => {
+  const myCountrie = useSelector(selectCountrie);
+  const dispatch = useDispatch();
+
   const [fromCT, setFromCT] = useState(1)
-  const [toCT, setToCT] = useState(2)
+  const [toCT, setToCT] = useState(0)
   const [departDate, setDepartDate] = useState("")
   const [returnDate, setReturnDate] = useState("")
-  const dispatch = useDispatch();
-  const myFlight = useSelector(selectedFlight);
+  // const dispatch = useDispatch();
+  // const myFlight = useSelector(selectedFlight);
   const [success, setSuccess] = useState(false);
 
-  const searchFilght = (fromCT,toCT,departDate,returnDate) => {
+  const searchFilght = (fromCT, toCT, departDate, returnDate) => {
     const newSelectedFly = {
-      fromCT:fromCT,
-      toCT:toCT,
-      departDate:departDate,
-      returnDate:returnDate,
+      fromCT: fromCT,
+      toCT: toCT,
+      departDate: departDate,
+      returnDate: returnDate,
     }
-    dispatch(get_selected_flightAsync(newSelectedFly))
-    // localStorage.setItem("myFlight", JSON.stringify(myFlight))
+    localStorage.setItem("myFlight", JSON.stringify(newSelectedFly))
     setSuccess(true)
   }
+
+  useEffect(() => {
+    dispatch(getCountrieAsync());
+  }, []);
 
   return (
     <div className='flightbooking'>
       {success ? (
-                <div>
-                    <Navigate to="/myFlight" replace={true} />
-                </div>
-            ) : (
-      <section>
-        <h1>Search for a Flight</h1>
+        <div>
+          <Navigate to="/myFlight" replace={true} />
+        </div>
+      ) : (
+        <section>
+          <h1>Search a Flight</h1>
           <label htmlFor='from'> From:  </label>
-          <input
-            type="text"
-            id="from"
-            onChange={(e) => setFromCT(e.target.value)}
-            value={fromCT}
-            required
-            aria-describedby="from"
-          />
+          <select name="from" id="from"
+            onChange={(e) => setFromCT(e.target.value)}>
+            {myCountrie.length > 0 && myCountrie.map((contrie, i) =>
+              <option key={i} value={contrie.id}>{contrie.name}</option>
+            )}</select>
           <label htmlFor='to'>  To: </label>
-          <input
-            type="text"
-            id="to"
-            onChange={(e) => setToCT(e.target.value)}
-            value={toCT}
-            required
-            aria-describedby="to"
-          />
+          <select name="to" id="to"
+            onChange={(e) => setToCT(e.target.value)}>
+            {myCountrie.length > 0 && myCountrie.map((contrie, i) =>
+              <option key={i} value={contrie.id}>{contrie.name}</option>
+            )}</select>
+
           <label htmlFor='departdate'> Depart:  </label>
           <input
             type="date"
@@ -71,9 +75,9 @@ const Form = () => {
             required
             aria-describedby="returnDate"
           />
-          <button onClick={() => searchFilght(fromCT,toCT,departDate,returnDate)}>Search </button>
-      </section>
-       )}
+          <button onClick={() => searchFilght(fromCT, toCT, departDate, returnDate)}>Search </button>
+        </section>
+      )}
     </div>
   )
 }

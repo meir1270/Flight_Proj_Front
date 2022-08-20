@@ -7,7 +7,8 @@ const initialState = {
     is_staff: false,
     is_superuser: false,
     access: "",
-    userAR : []
+    userAR : [],
+    user_id:0
 };
 
 
@@ -37,6 +38,9 @@ export const userSlice = createSlice({
         set_is_staff: (state, action) => {
             state.is_staff = action.payload;
         },
+        set_user_id: (state, action) => {
+          state.user_id = action.payload;
+      },
         set_is_superuser: (state, action) => {
             state.is_superuser = action.payload;
         },
@@ -52,6 +56,7 @@ export const userSlice = createSlice({
                 state.username = jwt_decode(myToken).username;
                 state.is_staff = jwt_decode(myToken).is_staff;
                 state.is_superuser = jwt_decode(myToken).is_superuser;
+                state.user_id = jwt_decode(myToken).user_id;
             }
           },
           clearUser: (state) => {
@@ -83,11 +88,12 @@ export const userSlice = createSlice({
       },
 });
 
-export const { set_is_staff, set_is_superuser, Set_userName, Set_access,checkUser,clearUser } = userSlice.actions;
+export const { set_is_staff, set_is_superuser, Set_userName, Set_access,checkUser,clearUser,set_user_id } = userSlice.actions;
 export const selectUserName = (state) => state.user.username;
 export const selectStaff = (state) => state.user.is_staff;
 export const selectSuperUser = (state) => state.user.is_superuser;
 export const selectAccess = (state) => state.user.access;
+export const selectUserId = (state) => state.user.user_id;
 export const selectUser = (state) => state.user.userAR;
 
 export default userSlice.reducer;

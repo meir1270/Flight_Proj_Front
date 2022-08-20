@@ -4,6 +4,7 @@ const FLIGHTS = "/flight"
 const ADD_FLIGHTS = "/addflight"
 const DELETE_FLIGHTS = "/deleteflight/"
 const SELECTED_FLIGHTS = "/selectflight/"
+const AIRLINE_FLIGHTS = "/airlineflights"
 
 
 export function getFlights() {
@@ -17,7 +18,7 @@ export function addFlight(newFlight) {
     'Authorization': `Bearer ${localStorage.getItem("access")}`
   };
   return new Promise((resolve) =>
-    axios.post(ADD_FLIGHTS, {headers},newFlight).then((res) => resolve({ data: res.data }))
+    axios.post(ADD_FLIGHTS,newFlight,{headers}).then((res) => resolve({ data: res.data }))
   );
 }
 
@@ -29,8 +30,6 @@ export function delFlight(id) {
     axios.delete(DELETE_FLIGHTS + id, {headers}).then((res) => resolve({ data: res.data }))
   );
 }
-
-
 
 //   const res = await axios.put('/api/article/123', {
 //     title: 'Making PUT Requests with Axios',
@@ -44,5 +43,14 @@ export function get_selected_flight(SelectedFlight) {
   return new Promise((resolve) =>
     axios.get(`${SELECTED_FLIGHTS+SelectedFlight.fromCT}/${SelectedFlight.toCT}/${SelectedFlight.departDate}/${SelectedFlight.returnDate}`)
     .then((res) => resolve({ data: res.data }))
+  );
+}
+
+export function getFlightForAirline() {
+  const headers = { 
+    'Authorization': `Bearer ${localStorage.getItem("access")}`
+  };
+  return new Promise((resolve) =>
+    axios.get(AIRLINE_FLIGHTS,{headers}).then((res) => resolve({ data: res.data }))
   );
 }

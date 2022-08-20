@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectTickets,
-    // addTicketsAsync,
-  deleteTicketsAsync,
-  getTicketsAsync,
+    selectMyTickets,
+  getTicketsForUserAsync,
 } from "../app/ticketsSlice";
 import '../App.css'
 import Table from 'react-bootstrap/Table';
+import { selectUserName} from "../app/userSlice";
 
-const Tickets = () => {
-  const myTickets = useSelector(selectTickets);
+const MyTickets = () => {
+  const myTickets = useSelector(selectMyTickets);
+  const userName = useSelector(selectUserName);
   const dispatch = useDispatch();
-  const [search, setSearch] = useState("");
   useEffect(() => {
-    dispatch(getTicketsAsync());
+    dispatch(getTicketsForUserAsync());
   }, []);
 
   return (
     <div>
       <br /><br /><br /><br />
-      Search by name: <input onChange={(e) => setSearch(e.target.value)} />
-      <br /><br />We have {myTickets.length} customers that have Tickets in my site
+      
+      <h3 style={{textAlign:"center"}}>
+      Hey {userName} you have {myTickets.length} Orders
+      </h3>
       <br /><br /><br /><br />
       <Table striped bordered hover variant="dark">
       <thead>
@@ -35,14 +36,10 @@ const Tickets = () => {
           <th>Landing Time</th>
           <th>Tickets</th>
           <th>Phone</th>
-          <th>Email</th>
-          <th></th>
-          
+          <th>Email</th>    
         </tr>
       </thead>
       {myTickets.length >0 && myTickets
-      .filter((x) =>
-      x.customer.first_name.includes(search))
       .map((tickets,i) => (
       <tbody key={i}>
         <tr>
@@ -56,11 +53,6 @@ const Tickets = () => {
           <td>{tickets.number_of_tickets}</td>
           <td>{tickets.customer.phone_No}</td>
           <td>{tickets.customer.user.email}</td>
-
-          <td>
-          <button onClick={() => dispatch(deleteTicketsAsync({ id: tickets.id }))} >
-              Delete</button>
-          </td>
         </tr>
       </tbody>
       ))}
@@ -69,4 +61,4 @@ const Tickets = () => {
   );
 };
 
-export default Tickets;
+export default MyTickets;
