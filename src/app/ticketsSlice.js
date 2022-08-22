@@ -4,7 +4,8 @@ import { addTickets,deleteTickets,getTickets,getTicketsForUser} from "../api/tic
 const initialState = {
   status: "idle",
   ticketsAR: [],
-  myTicketsAR:[]
+  myTicketsAR:[],
+  newTicketsAR: [],
 };
 
 // call the methods in the API
@@ -63,9 +64,12 @@ export const ticketsSlice = createSlice({
   name: "tickets",
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   state.value += 1;
-    // },
+    saveNewTickets: (state, action) => {
+      state.newTicketsAR = action.payload
+    },
+    updNewTickets: (state, action) => {
+      state.newTicketsAR = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -96,7 +100,8 @@ export const ticketsSlice = createSlice({
   },
 });
 
-// export const {} = customersSlice.actions;
+export const {saveNewTickets,updNewTickets} = ticketsSlice.actions;
 export const selectTickets = (state) => state.tickets.ticketsAR;
 export const selectMyTickets = (state) => state.tickets.myTicketsAR;
+export const selectnewTickets = (state) => state.tickets.newTicketsAR;
 export default ticketsSlice.reducer;

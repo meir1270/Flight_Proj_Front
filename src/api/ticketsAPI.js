@@ -28,7 +28,7 @@ export function deleteTickets(id) {
     'Authorization': `Bearer ${localStorage.getItem("access")}`
   };
   return new Promise((resolve) =>
-    axios.delete(DELETE_TICKET_URL + id,{headers}).then((res) => resolve({ data: res.data }))
+    axios.delete(DELETE_TICKET_URL+id,{headers}).then((res) => resolve({ data: res.data }))
   );
 }
 

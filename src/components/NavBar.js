@@ -28,6 +28,7 @@ const NavBar = () => {
         <div className='navBar'>
             <ul>
                 <li><Link to="/">Home</Link></li>
+                <li><Link to="/about">About</Link></li>
                 {superUser === true && <li><Link to="/customers">Customers</Link></li>}
                 {superUser === true && <li><Link to="/airlineCompanie">AirLines</Link></li>}
                 {superUser === true && <li><Link to="/countrie">Countries</Link></li>}

@@ -13,7 +13,7 @@ const Form = () => {
   const dispatch = useDispatch();
 
   const [fromCT, setFromCT] = useState(1)
-  const [toCT, setToCT] = useState(0)
+  const [toCT, setToCT] = useState(1)
   const [departDate, setDepartDate] = useState("")
   const [returnDate, setReturnDate] = useState("")
   // const dispatch = useDispatch();

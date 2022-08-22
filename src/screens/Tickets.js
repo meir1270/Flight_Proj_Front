@@ -34,28 +34,25 @@ const Tickets = () => {
           <th>Departure Time</th>
           <th>Landing Time</th>
           <th>Tickets</th>
-          <th>Phone</th>
-          <th>Email</th>
           <th></th>
           
         </tr>
       </thead>
       {myTickets.length >0 && myTickets
       .filter((x) =>
-      x.customer.first_name.includes(search))
+      x.user.username.includes(search))
       .map((tickets,i) => (
       <tbody key={i}>
         <tr>
           <td>{tickets.id}</td>
-          <td>{tickets.customer.first_name} {tickets.customer.last_name}</td>
+          <td>{tickets.user.username}</td>
           <td>{tickets.flight.airline_Companie.name}</td>
           <td>{tickets.flight.origin_countrie.name}</td>
           <td>{tickets.flight.destination_countrie.name}</td>
           <td>{tickets.flight.departure_time.split("").filter((s, i) => i <= 15)}</td>
           <td>{tickets.flight.landing_time.split("").filter((s, i) => i <= 15)}</td>
           <td>{tickets.number_of_tickets}</td>
-          <td>{tickets.customer.phone_No}</td>
-          <td>{tickets.customer.user.email}</td>
+
 
           <td>
           <button onClick={() => dispatch(deleteTicketsAsync({ id: tickets.id }))} >

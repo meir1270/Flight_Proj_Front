@@ -19,6 +19,7 @@ html {
   align-items: center;
   min-height: 100vh; 
   padding: 1rem 0.5rem;
+  margin-left: 30%;
 }
 
 section {
@@ -106,4 +107,13 @@ button {
 
 .line {
     display: inline-block;
+}
+
+.deatils{
+   float: right;;
+   margin-top: 10%;
+   margin-right: 25%;
+}
+p{
+    font-family: Arial;
 }

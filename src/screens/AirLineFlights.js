@@ -27,12 +27,13 @@ const AirLineFlights = () => {
 
     const access = localStorage.getItem("access");
 
-    const [origin_countrie, setOrigin_countrie] = useState(-1)
-    const [destination_countrie, setDestination_countrie] = useState(-1)
+    const [origin_countrie, setOrigin_countrie] = useState(1)
+    const [destination_countrie, setDestination_countrie] = useState(1)
     const [departure_time, setDeparture_time] = useState("")
     const [landing_time, setLanding_time] = useState("")
     const [remaining_tickets, setRemaining_tickets] = useState(0)
     const [search, setSearch] = useState("");
+    const [price, setPrice] = useState(0)
 
     const addFlight = (origin_countrie, destination_countrie, departure_time, landing_time, remaining_tickets) => {
         let  airline_companie=myAirline_Companies.length > 0 && myAirline_Companies.filter((x)=> x.user.username === userName).map(airline=>airline.id)
@@ -43,6 +44,7 @@ const AirLineFlights = () => {
             departure_time: departure_time,
             landing_time: landing_time,
             remaining_tickets: remaining_tickets,
+            price: price,
             user: jwt_decode(access).user_id,
         }
         console.log(newFlight)
@@ -78,6 +80,8 @@ const AirLineFlights = () => {
                 Departure time: <input type="datetime-local" onChange={(e) => setDeparture_time(e.target.value)}></input> <br />
                 Landing time: <input type="datetime-local" onChange={(e) => setLanding_time(e.target.value)}></input> <br />
                 The number of tickets: <input type="number" min={1} max={300} onChange={(e) => setRemaining_tickets(e.target.value)}></input> <br />
+                price for ticket: <input type="number" onChange={(e) => setPrice(e.target.value)}></input> <br />
+
                 <Button variant="primary" onClick={() =>
                     addFlight(origin_countrie, destination_countrie, departure_time, landing_time, remaining_tickets)}>
                     Add flight</Button>
@@ -96,6 +100,7 @@ const AirLineFlights = () => {
                         <th>landing time</th>
                         <th>remaining tickets</th>
                         <th>Status</th>
+                        <th>price</th>
                         <th> </th>
                     </tr>
                 </thead>
@@ -113,8 +118,9 @@ const AirLineFlights = () => {
                                 <td>{flight.landing_time.split("").filter((s, i) => i <= 15)}</td>
                                 <td>{flight.remaining_tickets}</td>
                                 <td>{flight.status ? "available" : "unavailable"}</td>
+                                <td>{flight.price}$</td>
                                 <td>
-                                <Button variant="danger"onClick={() => dispatch(deleteFlightAsync({ id: flight.id }))} >
+                                <Button variant="danger" onClick={() => dispatch(deleteFlightAsync({ id: flight.id }))} >
                                         Delete</Button>
                                 </td>
                             </tr>

@@ -26,6 +26,8 @@ import PageNotFound from './components/PageNotFound';
 import MyTickets from './screens/MyTickets';
 import AirLineFlights from './screens/AirLineFlights';
 import Message from './components/Message';
+import About from './screens/About';
+import Payment from './screens/Payment';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +43,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/airlineCompanie" element={<AirlineCompanie />} />
           <Route path="/countrie" element={<Countrie />} />
@@ -48,6 +51,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/MyFlight" element={<MyFlight />} />
           <Route path="/myTickets" element={<MyTickets />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/AirLineFlights" element={<AirLineFlights />} />
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/settings" element={<Setting />} />

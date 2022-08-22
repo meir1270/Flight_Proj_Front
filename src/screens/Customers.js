@@ -32,7 +32,6 @@ const Customers = () => {
           <th>Last Name</th>
           <th>Adress</th>
           <th>Phone</th>
-          <th>Credit Card</th>
           <th>Created Time</th>
           <th>User Name</th>
           <th>Email</th>
@@ -51,7 +50,6 @@ const Customers = () => {
           <td>{customer.last_name}</td>
           <td>{customer.address}</td>
           <td>{customer.phone_No}</td>
-          <td>{customer.credit_card_No}</td>
           <td>{customer.createdTime.split("").filter((s,i) => i<=9)}</td>
           <td>{customer.user.username}</td>
           <td>{customer.user.email}</td>

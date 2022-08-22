@@ -23,7 +23,8 @@ const MyFlight = () => {
             destination_countrie:flight.destination_countrie.name,
             departure_time:flight.departure_time,
             landing_time:flight.landing_time,
-            remaining_tickets:flight.remaining_tickets
+            remaining_tickets:flight.remaining_tickets,
+            price:flight.price
           }
         dispatch(saveSelectedFlight(yourFlight))
     }
@@ -45,6 +46,7 @@ const MyFlight = () => {
                         <th>departure time</th>
                         <th>landing time</th>
                         <th>remaining tickets</th>
+                        <th>price</th>
                         <th>  </th>
                     </tr>
                 </thead>
@@ -61,6 +63,7 @@ const MyFlight = () => {
                                 <td>{flight.departure_time.split("").filter((s, i) => i <= 15)}</td>
                                 <td>{flight.landing_time.split("").filter((s, i) => i <= 15)}</td>
                                 <td>{flight.remaining_tickets}</td>
+                                <td>{flight.price}$</td>
                                 <td>
                                 {!log ? (
                                     <button onClick={() =>saveFlight(flight)}>

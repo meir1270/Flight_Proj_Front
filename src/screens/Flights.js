@@ -32,6 +32,7 @@ const Flight = () => {
             <th>landing time</th>
             <th>remaining tickets</th>
             <th>Status</th>
+            <th>price</th>
             <th> </th>
           </tr>
         </thead>
@@ -49,6 +50,7 @@ const Flight = () => {
                 <td>{flight.landing_time.split("").filter((s, i) => i <= 15)}</td>
                 <td>{flight.remaining_tickets}</td>
                 <td>{flight.status ? "available" : "unavailable"}</td>
+                <td>{flight.price}$</td>
                 <td>
                   <button onClick={() => dispatch(deleteFlightAsync({ id: flight.id }))} >
                     Delete</button>
