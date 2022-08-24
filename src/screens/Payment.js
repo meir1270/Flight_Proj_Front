@@ -40,7 +40,7 @@ const Payment = () => {
             <td>{yourFlight.departure_time}</td>
             <td>{yourFlight.landing_time}</td>
             <td>{myTickets.number_of_tickets}</td>
-            <td>{yourFlight.price*myTickets.number_of_tickets}</td>
+            <td>{yourFlight.price*myTickets.number_of_tickets}$</td>
           </tr>
         </tbody>
       </Table>
