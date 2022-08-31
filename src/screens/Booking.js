@@ -84,7 +84,7 @@ const Booking = () => {
             <td>{yourFlight.departure_time}</td>
             <td>{yourFlight.landing_time}</td>
             <td>{yourFlight.remaining_tickets}</td>
-            <td>{yourFlight.price}</td>
+            <td>{yourFlight.price}$</td>
           </tr>
         </tbody>
       </Table>

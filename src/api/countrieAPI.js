@@ -2,7 +2,7 @@ import axios from "./axios";
 
 const COUNTRIE_URL = "/countrie";
 const ADD_COUNTRIE_URL = "/addcountrie";
-const DELETE_COUNTRIE_URL = "/deletecountrie/";
+const DELETE_COUNTRIE_URL = "/deletecountrie";
 
 
 export function getCountrie() {
